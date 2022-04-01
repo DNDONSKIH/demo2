@@ -36,6 +36,11 @@ public class ContactController {
         return contactRepository.findBySurname(surname);
     }
 
+    @GetMapping("/surname2")
+    public @ResponseBody List<Contact> getContactByName2(@RequestParam(name="surname") String surname) {
+        return contactRepository.findBySurnameStartingWith(surname);
+    }
+
     @GetMapping("/phone-number")
     public @ResponseBody List<Contact> getContactByPhoneNumber(@RequestParam(name="number") String number) {
         return contactRepository.findByPhoneNumberList_Value(number);

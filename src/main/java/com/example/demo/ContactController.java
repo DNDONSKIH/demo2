@@ -17,7 +17,7 @@ public class ContactController {
     private ContactRepository contactRepository;
 
     @GetMapping
-    public  String index(){
+    public  String index() {
         return "index";
     }
 
@@ -28,13 +28,17 @@ public class ContactController {
 
     @GetMapping("/list/{id}")
     public @ResponseBody Contact getContactsById(@PathVariable Integer id) {
-        return contactRepository.findById(id).orElse(null);
+        return contactRepository.findById(id).orElse(new Contact());
     }
 
-    @GetMapping("/name")
-    public @ResponseBody List<Contact> getContactByName(@RequestParam(name="substr", defaultValue="1") String substr) {
-        var cl = contactRepository.findBySurnameStartsWith(substr);
-        return cl;
+    @GetMapping("/surname")
+    public @ResponseBody List<Contact> getContactByName(@RequestParam(name="surname") String surname) {
+        return contactRepository.findBySurname(surname);
+    }
+
+    @GetMapping("/phone-number")
+    public @ResponseBody List<Contact> getContactByPhoneNumber(@RequestParam(name="number") String number) {
+        return contactRepository.findByPhoneNumberList_Value(number);
     }
 
     @GetMapping("/add")

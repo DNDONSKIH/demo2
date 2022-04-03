@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Convert;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +23,37 @@ public class ContactController {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @PostMapping("/contacts") //другой способ получить параметры get апроса
+    public String addNewContact(@RequestParam("surname") String surname,
+                                @RequestParam("middlename") String middlename,
+                                @RequestParam("lastname") String lastname,
+                                @RequestParam("birthday") String birthday) {
+
+        String [] dateSubstring = birthday.split("-");
+
+        int dateYearNum = Integer.parseInt(dateSubstring[0]);
+        int dateMonthNum = Integer.parseInt(dateSubstring[1]);
+        int dateDayNum = Integer.parseInt(dateSubstring[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, dateYearNum);
+        cal.set(Calendar.MONTH, dateMonthNum);
+        cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
+        Date date = cal.getTime();
+
+        var newContact = new Contact();
+        var numList = new ArrayList<PhoneNumber>();
+        newContact.setSurname(surname);
+        newContact.setMiddleName(middlename);
+        newContact.setLastName(lastname);
+        newContact.setBirthday(date);
+
+        newContact.setPhoneNumberList( numList );
+        contactRepository.save(newContact);
+
+        return "contacts";
+    }
 
     @GetMapping("/contacts")
     public String getContacts(Model model) {

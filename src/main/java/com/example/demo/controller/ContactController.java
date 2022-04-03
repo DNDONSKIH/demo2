@@ -1,9 +1,15 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.model.Contact;
+import com.example.demo.model.PhoneNumber;
+import com.example.demo.model.PhoneType;
+import com.example.demo.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,10 +22,29 @@ public class ContactController {
     @Autowired
     private ContactRepository contactRepository;
 
-    @GetMapping
-    public  String index() {
-        return "index";
+    @GetMapping("/contacts")
+    public String getContacts(Model model) {
+        Iterable<Contact> contactIterable = contactRepository.findAll();
+        var contacts = new ArrayList<Contact>();
+        for(Contact contact : contactIterable) {
+            contacts.add(contact);
+        }
+        model.addAttribute("contacts", contacts);
+        return "contacts";
     }
+
+    @GetMapping("/contacts/{id}")
+    public String getContacById(@PathVariable Integer id, Model model) {
+        Contact contact = contactRepository.findById(id).orElse(new Contact());
+        model.addAttribute("contact", contact);
+        return "contact";
+    }
+
+
+//    @GetMapping
+//    public  String index() {
+//        return "index";
+//    }
 
     @GetMapping("/list")
     public @ResponseBody Iterable<Contact> getAllContacts() {
@@ -32,17 +57,18 @@ public class ContactController {
     }
 
     @GetMapping("/surname")
-    public @ResponseBody List<Contact> getContactByName(@RequestParam(name="surname") String surname) {
+    public @ResponseBody List<Contact> getContactByName(@RequestParam("surname") String surname) {
         return contactRepository.findBySurname(surname);
     }
 
     @GetMapping("/surname2")
-    public @ResponseBody List<Contact> getContactByName2(@RequestParam(name="surname") String surname) {
+    public @ResponseBody List<Contact> getContactByName2(@RequestParam("surname") String surname) {
         return contactRepository.findBySurnameStartingWith(surname);
     }
 
-    @GetMapping("/phone-number")
-    public @ResponseBody List<Contact> getContactByPhoneNumber(@RequestParam(name="number") String number) {
+    @GetMapping("/phone-number") //другой способ получить параметры get апроса
+    public @ResponseBody List<Contact> getContactByPhoneNumber(HttpServletRequest request) {
+        String number = request.getParameter("number");
         return contactRepository.findByPhoneNumberList_Value(number);
     }
 
@@ -57,10 +83,12 @@ public class ContactController {
         var phonenumber1 = new PhoneNumber();
         phonenumber1.setValue("11111122233331");
         phonenumber1.setType(PhoneType.WORK);
+        phonenumber1.setContact(newContact);
 
         var phonenumber2 = new PhoneNumber();
         phonenumber2.setValue("22222");
         phonenumber2.setType(PhoneType.CELLPHONE);
+        phonenumber2.setContact(newContact);
 
         var numlist = new ArrayList<PhoneNumber>();
         numlist.add(phonenumber1);

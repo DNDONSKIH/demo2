@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список контактов</title>
+    <script src="/js/jquery-3.4.0.min.js"></script>
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+
+<div id="create-contact-form">
+    <form method="POST" action="/contacts">
+        <div>
+            <h3>Добавление контакта</h3>
+            <label>Фамилия:</label><input type="text" name="surname" value=""><br>
+            <label>Имя:</label><input type="text" name="middlename" value=""><br>
+            <label>Отчество:</label><input type="text" name="lastname" value=""><br>
+            <label>День рождения:</label>
+            <input type="date" name="birthday"> <!--date/month/week-->
+            <button type="submit" id="save-contact">Сохранить</button>
+        </div>
+    </form>
+</div>
+
+<button id="show-add-contact-form">Добавить контакт</button>
+
+<div id="contact-list">
+    <div th:each="contact : ${contacts}">
+        <a th:href="@{/contacts/{id}(id=${contact.getId()})}"
+           class="contact-link"
+           th:attr="data-id=${contact.getId()}"
+           th:text="${contact.getSurname()}"></a>
+    </div>
+</div>
+
+</body>
+</html>

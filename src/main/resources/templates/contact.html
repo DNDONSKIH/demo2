@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакт</title>
+    <script src="/js/jquery-3.4.0.min.js"></script>
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+<h3 th:text="${contact.getSurname()}"></h3>
+<p th:text="${contact.getMiddleName()}"></p>
+<p th:text="${contact.getLastName()}"></p>
+Дата рождения:
+<p th:text="${contact.getBirthday()}"></p>
+Список телефонов:
+
+<div th:each="PhoneNumber : ${contact.getPhoneNumberList()}">
+        <p th:text="${PhoneNumber.getType()}"></p>
+        <ul><li><p th:text="${PhoneNumber.getValue()}"></p></li></ul>
+</div>
+
+
+
+
+<div id="add-phonenumber-form">
+    <form>
+        <h3>Добавление контакта</h3>
+        <label>Фамилия:</label>
+        <input type="text" name="surname" value="">
+        <br>
+
+        <div>
+            <input type="radio" id="contactChoice1"
+                   name="phone-type" value="work" checked>
+            <label for="contactChoice1">Email</label>
+
+            <input type="radio" id="contactChoice2"
+                   name="phone-type" value="home">
+            <label for="contactChoice2">Phone</label>
+
+            <input type="radio" id="contactChoice3"
+                   name="phone-type" value="cellphone">
+            <label for="contactChoice3">Mail</label>
+        </div>
+
+        <label>Год выпуска:</label>
+        <input type="text" name="year" value="">
+        <button id="save-contact">Сохранить</button>
+    </form>
+</div>
+
+
+</body>
+</html>

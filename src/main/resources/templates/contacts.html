@@ -9,6 +9,23 @@
 </head>
 <body>
 
+<div id="find-contact-form">
+    <div>
+        <h3>Поиск контактов:</h3>
+        <form method="GET" action="/filtered-by-surname/">
+                <label>Фамилия:</label><br>
+                <input type="text" name="surname" value=""><br>
+                <button type="submit">Поиск</button><br>
+        </form>
+        <br>
+        <form method="GET" action="/filtered-by-phone-number/">
+            <label>Номер телефона:</label><br>
+            <input type="text" name="phonenumber" value=""><br>
+            <button type="submit">Поиск</button><br>
+        </form>
+    </div>
+</div>
+
 <div id="create-contact-form">
     <form method="POST" action="/contacts">
         <div>
@@ -17,16 +34,15 @@
             <label>Имя:</label><input type="text" name="middlename" value=""><br>
             <label>Отчество:</label><input type="text" name="lastname" value=""><br>
             <label>День рождения:</label>
-            <input type="date" name="birthday"> <!--date/month/week-->
+            <input type="date" name="birthday">
             <button type="submit" id="save-contact">Сохранить</button>
         </div>
     </form>
 </div>
 
 <button id="show-add-contact-form">Добавить контакт</button>
-<p>Список контактов:</p>
-
-<br>
+<button id="show-find-contact-form">Поиск контакта</button><br>
+<p>Список контактов:</p><br>
 
 <div id="contact-list">
     <div th:each="contact : ${contacts}">

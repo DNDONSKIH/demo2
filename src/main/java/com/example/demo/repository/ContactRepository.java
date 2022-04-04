@@ -1,7 +1,7 @@
 package com.example.demo.repository;
 
 
-import com.example.demo.model.Contact;
+import com.example.demo.entities.Contact;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,9 +1,8 @@
-package com.example.demo.model;
+package com.example.demo.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class Contact {
     private Date birthday;
     @OneToMany( targetEntity = PhoneNumber.class,
                 mappedBy = "contact",
-                cascade = CascadeType.ALL,
-                fetch = FetchType.EAGER)
+                cascade = CascadeType.ALL/*,
+                fetch = FetchType.EAGER*/)
     private List<PhoneNumber> phoneNumberList;
 }

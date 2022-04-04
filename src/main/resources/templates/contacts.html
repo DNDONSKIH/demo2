@@ -24,6 +24,9 @@
 </div>
 
 <button id="show-add-contact-form">Добавить контакт</button>
+<p>Список контактов:</p>
+
+<br>
 
 <div id="contact-list">
     <div th:each="contact : ${contacts}">
@@ -31,6 +34,11 @@
            class="contact-link"
            th:attr="data-id=${contact.getId()}"
            th:text="${contact.getSurname()}"></a>
+        <br>
+        <form action="#" th:action="@{/contacts/del/{id}(id=${contact.getId()})}" method="post">
+            <p><input type="submit" value="Удалить"/></p>
+        </form>
+        <hr>
     </div>
 </div>
 

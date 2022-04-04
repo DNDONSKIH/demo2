@@ -1,20 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Contact;
-import com.example.demo.model.PhoneNumber;
-import com.example.demo.model.PhoneType;
+import com.example.demo.entities.Contact;
+import com.example.demo.entities.PhoneNumber;
+import com.example.demo.entities.PhoneType;
 import com.example.demo.repository.ContactRepository;
+import com.example.demo.repository.PhoneNumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Convert;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -24,64 +21,118 @@ public class ContactController {
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    private PhoneNumberRepository phoneNumberRepository;
 
-
-@GetMapping("/contacts")
-public String getContacts(Model model) {
-    Iterable<Contact> contactIterable = contactRepository.findAll();
-    var contacts = new ArrayList<Contact>();
-    for(Contact contact : contactIterable) {
-        contacts.add(contact);
+    @GetMapping("/contacts")
+    public String getContacts(Model model) {
+        Iterable<Contact> contactIterable = contactRepository.findAll();
+        var contacts = new ArrayList<Contact>();
+        for(Contact contact : contactIterable) {
+            contacts.add(contact);
+        }
+        model.addAttribute("contacts", contacts);
+        return "contacts";
     }
-    model.addAttribute("contacts", contacts);
-    return "contacts";
-}
-
 
     @PostMapping("/contacts")
-public String addNewContact(@RequestParam("surname") String surname,
-                            @RequestParam("middlename") String middlename,
-                            @RequestParam("lastname") String lastname,
-                            @RequestParam("birthday") String birthday) {
+    public String addNewContact(@RequestParam("surname") String surname,
+                                @RequestParam("middlename") String middlename,
+                                @RequestParam("lastname") String lastname,
+                                @RequestParam("birthday") String birthday,
+                                Model model) {
 
-    String [] dateSubstring = birthday.split("-");
+        String [] dateSubstring = birthday.split("-");
+        int dateYearNum = Integer.parseInt(dateSubstring[0]);
+        int dateMonthNum = Integer.parseInt(dateSubstring[1]);
+        int dateDayNum = Integer.parseInt(dateSubstring[2]);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, dateYearNum);
+        cal.set(Calendar.MONTH, dateMonthNum);
+        cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
+        Date date = cal.getTime();
 
-    int dateYearNum = Integer.parseInt(dateSubstring[0]);
-    int dateMonthNum = Integer.parseInt(dateSubstring[1]);
-    int dateDayNum = Integer.parseInt(dateSubstring[2]);
+        var newContact = new Contact();
+        var numList = new ArrayList<PhoneNumber>();
+        newContact.setSurname(surname);
+        newContact.setMiddleName(middlename);
+        newContact.setLastName(lastname);
+        newContact.setBirthday(date);
 
-    Calendar cal = Calendar.getInstance();
-    cal.set(Calendar.YEAR, dateYearNum);
-    cal.set(Calendar.MONTH, dateMonthNum);
-    cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
-    Date date = cal.getTime();
+        newContact.setPhoneNumberList( numList );
+        contactRepository.save(newContact);
 
-    var newContact = new Contact();
-    var numList = new ArrayList<PhoneNumber>();
-    newContact.setSurname(surname);
-    newContact.setMiddleName(middlename);
-    newContact.setLastName(lastname);
-    newContact.setBirthday(date);
+        Iterable<Contact> contactIterable = contactRepository.findAll();
+        var contacts = new ArrayList<Contact>();
+        for(Contact contact : contactIterable) {
+            contacts.add(contact);
+        }
+        model.addAttribute("contacts", contacts);
 
-    newContact.setPhoneNumberList( numList );
-    contactRepository.save(newContact);
+        return "contacts";
+    }
 
-    return "contacts";
-}
+    @PostMapping("/contacts/{id}")
+    public String addPhoneNumberById(@PathVariable Integer id,
+                                     @RequestParam(name = "value", required = false, defaultValue = "") String requestValue,
+                                     @RequestParam(name = "phone-type", required = false, defaultValue = "cellphone") String requestPhoneType,
+                                     Model model) {
+        Contact contact = contactRepository.findById(id).orElse(new Contact());
+        //contactRepository.deleteById(id);
 
+        PhoneType phoneType;
+        switch (requestPhoneType) {
+            case "home":
+                phoneType = PhoneType.HOME;
+                break;
+            case "cellphone":
+                phoneType = PhoneType.CELLPHONE;
+                break;
+            default:
+                phoneType = PhoneType.WORK;
+                break;
+        }
 
+        var newPhoneNumber = new PhoneNumber();
+        newPhoneNumber.setValue(requestValue);
+        newPhoneNumber.setType(phoneType);
+        newPhoneNumber.setContact(contact);
 
+        var numlist = contact.getPhoneNumberList();
+        numlist.add(newPhoneNumber);
+        contact.setPhoneNumberList( numlist );
+        contactRepository.save(contact);
 
+        model.addAttribute("contact", contact);
+        return "redirect:/contacts/" + id.toString();
+    }
 
+    @PostMapping("/contacts/del/{id}")
+    public String deleteContactById(@PathVariable Integer id, Model model) {
+        Contact deletedContact = contactRepository.findById(id).orElse(new Contact());
+        contactRepository.delete(deletedContact);
 
+        Iterable<Contact> contactIterable = contactRepository.findAll();
+        var contacts = new ArrayList<Contact>();
+        for(Contact contact : contactIterable) {
+            contacts.add(contact);
+        }
+        model.addAttribute("contacts", contacts);
+        return "redirect:/contacts";
+    }
 
+    @PostMapping("/contacts/{id}/del/{phoneid}")
+    public String addPhoneNumberById(@PathVariable Integer id,
+                                     @PathVariable Integer phoneid,
+                                     Model model) {
 
+        PhoneNumber deletedPhoneNumber = phoneNumberRepository.findById(phoneid).orElse(new PhoneNumber());
+        phoneNumberRepository.delete(deletedPhoneNumber);
 
-
-
-
-
-
+        Contact contact = contactRepository.findById(id).orElse(new Contact());
+        model.addAttribute("contact", contact);
+        return "redirect:/contacts/" + id.toString();
+    }
 
     @GetMapping("/contacts/{id}")
     public String getContacById(@PathVariable Integer id, Model model) {

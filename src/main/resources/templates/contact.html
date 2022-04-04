@@ -14,42 +14,45 @@
 Дата рождения:
 <p th:text="${contact.getBirthday()}"></p>
 Список телефонов:
+<hr>
 
 <div th:each="PhoneNumber : ${contact.getPhoneNumberList()}">
         <p th:text="${PhoneNumber.getType()}"></p>
-        <ul><li><p th:text="${PhoneNumber.getValue()}"></p></li></ul>
+        <ul><li><p th:text="${PhoneNumber.getValue()}"></p>
+            <form action="#"
+                  th:action="@{/contacts/{id}/del/{phoneid}(id=${contact.getId()}, phoneid=${PhoneNumber.getId()})}"
+                  method="post">
+                <p><input type="submit" value="Удалить" /> </p>
+            </form>
+        </li></ul>
+        <hr>
 </div>
 
-
-
-
 <div id="add-phonenumber-form">
-    <form>
+    <form action="?" method="post">
         <h3>Добавление контакта</h3>
-        <label>Фамилия:</label>
-        <input type="text" name="surname" value="">
+        <label>Телефон:</label>
+        <input type="text" name="value" value="">
         <br>
 
         <div>
             <input type="radio" id="contactChoice1"
                    name="phone-type" value="work" checked>
-            <label for="contactChoice1">Email</label>
+            <label for="contactChoice1">Рабочий</label>
 
             <input type="radio" id="contactChoice2"
                    name="phone-type" value="home">
-            <label for="contactChoice2">Phone</label>
+            <label for="contactChoice2">Домашний</label>
 
             <input type="radio" id="contactChoice3"
                    name="phone-type" value="cellphone">
-            <label for="contactChoice3">Mail</label>
+            <label for="contactChoice3">Мобильный</label>
         </div>
+        <br>
 
-        <label>Год выпуска:</label>
-        <input type="text" name="year" value="">
-        <button id="save-contact">Сохранить</button>
+        <button type="submit" id="save-contact">Сохранить</button>
     </form>
 </div>
-
 
 </body>
 </html>

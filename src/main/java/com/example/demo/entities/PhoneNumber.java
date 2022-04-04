@@ -1,8 +1,9 @@
-package com.example.demo.model;
+package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class PhoneNumber {
 
     @ManyToOne
     @JoinColumn(name="contact_id")
+    //@ToString.Exclude
     private Contact contact;
 
     private String value;

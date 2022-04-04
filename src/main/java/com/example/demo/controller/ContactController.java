@@ -26,13 +26,7 @@ public class ContactController {
     public String getContacts(Model model) {
         Iterable<Contact> contactIterable = contactRepository.findAll();
         var contacts = new ArrayList<Contact>();
-
-        contactIterable.forEach(contact -> {
-            contacts.add(contact);
-        });
-//        for(Contact contact : contactIterable) {
-//            contacts.add(contact);
-//        }
+        contactIterable.forEach(contact -> { contacts.add(contact); });
         model.addAttribute("contacts", contacts);
         return "contacts";
     }
@@ -66,9 +60,7 @@ public class ContactController {
 
         Iterable<Contact> contactIterable = contactRepository.findAll();
         var contacts = new ArrayList<Contact>();
-        for(Contact contact : contactIterable) {
-            contacts.add(contact);
-        }
+        contactIterable.forEach(contact -> { contacts.add(contact); });
         model.addAttribute("contacts", contacts);
 
         return "contacts";
@@ -115,9 +107,7 @@ public class ContactController {
 
         Iterable<Contact> contactIterable = contactRepository.findAll();
         var contacts = new ArrayList<Contact>();
-        for(Contact contact : contactIterable) {
-            contacts.add(contact);
-        }
+        contactIterable.forEach(contact -> { contacts.add(contact); });
         model.addAttribute("contacts", contacts);
         return "redirect:/contacts";
     }

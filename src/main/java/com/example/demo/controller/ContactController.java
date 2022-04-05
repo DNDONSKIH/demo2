@@ -39,9 +39,18 @@ public class ContactController {
                                 Model model) {
 
         String [] dateSubstring = birthday.split("-");
-        int dateYearNum = Integer.parseInt(dateSubstring[0]);
-        int dateMonthNum = Integer.parseInt(dateSubstring[1]);
-        int dateDayNum = Integer.parseInt(dateSubstring[2]);
+        int dateYearNum, dateMonthNum, dateDayNum;
+        try {
+            dateYearNum = Integer.parseInt(dateSubstring[0]);
+            dateMonthNum = Integer.parseInt(dateSubstring[1]);
+            dateDayNum = Integer.parseInt(dateSubstring[2]);
+        }
+        catch (Exception ex){
+            dateYearNum = 2000;
+            dateMonthNum = 1;
+            dateDayNum = 1;
+        }
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, dateYearNum);
         cal.set(Calendar.MONTH, dateMonthNum);

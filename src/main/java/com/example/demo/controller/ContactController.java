@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.components.DateStringToDateConverter;
 import com.example.demo.entities.Contact;
 import com.example.demo.entities.PhoneNumber;
 import com.example.demo.entities.PhoneType;
@@ -14,6 +15,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/contacts")
 public class ContactController {
+
+    @Autowired
+    private DateStringToDateConverter dateStringToDateConverter;
 
     @Autowired
     private ContactRepository contactRepository;
@@ -37,14 +41,12 @@ public class ContactController {
         return "contact";
     }
 
-
     @GetMapping("/{id}/edit")
     public String editContactById(@PathVariable Integer id, Model model) {
         Contact contact = contactRepository.findById(id).orElse(new Contact());
         model.addAttribute("contact", contact);
         return "contact-edit";
     }
-
 
     @GetMapping("/filtered-by-surname")
     public String getContactByName(@RequestParam("surname") String surname, Model model) {
@@ -66,25 +68,7 @@ public class ContactController {
                                 @RequestParam("lastname") String lastname,
                                 @RequestParam("birthday") String birthday) {
 
-        String [] dateSubstring = birthday.split("-");
-        int dateYearNum = 2000;
-        int dateMonthNum = 1;
-        int dateDayNum = 1;
-        try {
-            dateYearNum = Integer.parseInt(dateSubstring[0]);
-            dateMonthNum = Integer.parseInt(dateSubstring[1]);
-            dateDayNum = Integer.parseInt(dateSubstring[2]);
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, dateYearNum);
-        cal.set(Calendar.MONTH, dateMonthNum);
-        cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
-        Date date = cal.getTime();
-
+        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
         var newContact = new Contact();
         var numList = new ArrayList<PhoneNumber>();
         newContact.setSurname(surname);
@@ -147,25 +131,7 @@ public class ContactController {
                                         @RequestParam("birthday") String birthday,
                                         @PathVariable Integer id) {
 
-        String [] dateSubstring = birthday.split("-");
-        int dateYearNum = 2000;
-        int dateMonthNum = 1;
-        int dateDayNum = 1;
-        try {
-            dateYearNum = Integer.parseInt(dateSubstring[0]);
-            dateMonthNum = Integer.parseInt(dateSubstring[1]);
-            dateDayNum = Integer.parseInt(dateSubstring[2]);
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, dateYearNum);
-        cal.set(Calendar.MONTH, dateMonthNum);
-        cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
-        Date date = cal.getTime();
-
+        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
         Contact patchedContact = contactRepository
                 .findById(id).orElse(new Contact());
 
@@ -178,7 +144,6 @@ public class ContactController {
 
         return "redirect:/contacts/" + id.toString();
     }
-
 
 //    @GetMapping("/find-by-phone-number") //другой способ получить параметры get апроса
 //    public @ResponseBody List<Contact> getContactByPhoneNumber(HttpServletRequest request) {

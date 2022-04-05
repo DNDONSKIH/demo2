@@ -51,7 +51,8 @@
            th:attr="data-id=${contact.getId()}"
            th:text="${contact.getSurname()}"></a>
         <br>
-        <form action="#" th:action="@{/contacts/del/{id}(id=${contact.getId()})}" method="post">
+        <form action="/contacts" th:method="DELETE">
+            <input type="hidden" name="contactId" th:attr="value=${contact.getId()}">
             <p><input type="submit" value="Удалить"/></p>
         </form>
         <hr>

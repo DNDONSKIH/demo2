@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить контакт</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+
+<div id="patch-contact-form">
+    <form th:method="PATCH" th:action="@{/contacts/{id}(id=${contact.getId()})}">
+        <div>
+            <h3>Добавление контакта</h3>
+            <label>Фамилия:</label> <input type="text"  name="surname"       th:attr="value=${contact.getSurname()}"><br>
+            <label>Имя:</label>     <input type="text"  name="middlename"    th:attr="value=${contact.getMiddleName()}"><br>
+            <label>Отчество:</label><input type="text"  name="lastname"      th:attr="value=${contact.getLastName()}"><br>
+            <label>День рождения:</label>
+            <input type="date" name="birthday">
+            <button type="submit" id="patch-contact">Изменить</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

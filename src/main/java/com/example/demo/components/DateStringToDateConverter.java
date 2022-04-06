@@ -27,7 +27,7 @@ public class DateStringToDateConverter {
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, dateYearNum);
-        cal.set(Calendar.MONTH, dateMonthNum);
+        cal.set(Calendar.MONTH, (dateMonthNum-1));
         cal.set(Calendar.DAY_OF_MONTH, dateDayNum);
         return cal.getTime();
     }

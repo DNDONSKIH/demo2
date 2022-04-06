@@ -49,7 +49,7 @@
         <a th:href="@{/contacts/{id}(id=${contact.getId()})}"
            class="contact-link"
            th:attr="data-id=${contact.getId()}"
-           th:text="${contact.getSurname()}"></a>
+           th:text="${contact.getSurname() + ' ' + contact.getMiddleName()}"></a>
         <br>
         <form action="/contacts" th:method="DELETE">
             <input type="hidden" name="contactId" th:attr="value=${contact.getId()}">

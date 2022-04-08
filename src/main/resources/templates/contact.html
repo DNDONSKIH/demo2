@@ -21,14 +21,13 @@
 <hr>
 
 <div th:each="PhoneNumber : ${contact.getPhoneNumberList()}">
-        <p th:text="${PhoneNumber.getType()}"></p>
-        <ul><li><p th:text="${PhoneNumber.getValue()}"></p>
-            <form th:action="@{/contacts/{id}(id=${contact.getId()})}" th:method="DELETE">
-                <input type="hidden" name="phoneId" th:attr="value=${PhoneNumber.getId()}" />
-                <p><input type="submit" value="Удалить" /> </p>
-            </form>
-        </li></ul>
-        <hr>
+    <p th:text="${PhoneNumber.getType()}"></p>
+    <p th:text="${PhoneNumber.getValue()}"></p>
+    <form th:action="@{/contacts/{id}(id=${contact.getId()})}" th:method="DELETE">
+        <input type="hidden" name="phoneId" th:attr="value=${PhoneNumber.getId()}" />
+        <p><input type="submit" value="Удалить" /> </p>
+    </form>
+    <hr>
 </div>
 
 <div id="add-phonenumber-form">

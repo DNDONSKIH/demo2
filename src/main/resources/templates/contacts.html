@@ -27,8 +27,8 @@
 </div>
 
 <div id="create-contact-form">
-    <form method="POST" action="/contacts">
-        <div>
+    <form method="POST" action="/contacts" id="add-contact-form">
+<!--        <div>-->
             <h3>Добавление контакта</h3>
             <label>Фамилия:</label><input type="text" name="surname" value=""><br>
             <label>Имя:</label><input type="text" name="middlename" value=""><br>
@@ -36,7 +36,20 @@
             <label>День рождения:</label>
             <input type="date" name="birthday">
             <button type="submit" id="save-contact">Сохранить</button>
-        </div>
+<!--        </div>-->
+    </form>
+</div>
+
+
+<div id="create-contact-form-ajax">
+    <form id="add-contact-form-ajax">
+            <h3>Добавление контакта</h3>
+            <label>Фамилия:</label><input type="text" name="surname" value=""><br>
+            <label>Имя:</label><input type="text" name="middlename" value=""><br>
+            <label>Отчество:</label><input type="text" name="lastname" ><br>
+            <label>День рождения:</label>
+            <input type="date" name="birthday">
+            <button id="fetch-post-button">fetch_test</button>
     </form>
 </div>
 

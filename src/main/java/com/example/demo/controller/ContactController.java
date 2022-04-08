@@ -150,4 +150,25 @@ public class ContactController {
 //        String number = request.getParameter("number");
 //        return contactRepository.findByPhoneNumberList_Value(number);
 //    }
+
+    @PostMapping("/addnew")
+    public @ResponseBody Contact getContactByPhoneNumber(   @RequestParam("surname") String surname,
+                                                            @RequestParam("middlename") String middlename,
+                                                            @RequestParam("lastname") String lastname,
+                                                            @RequestParam("birthday") String birthday ) {
+        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
+        var newContact = new Contact();
+        var numList = new ArrayList<PhoneNumber>();
+        newContact.setSurname(surname);
+        newContact.setMiddleName(middlename);
+        newContact.setLastName(lastname);
+        newContact.setBirthday(date);
+
+        newContact.setPhoneNumberList( numList );
+        var savedContact = contactRepository.save(newContact);
+        return contactRepository.findById(savedContact.getId()).orElse(new Contact());
+    }
+
+
+
 }

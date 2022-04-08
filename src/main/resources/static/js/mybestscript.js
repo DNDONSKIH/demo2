@@ -19,3 +19,49 @@ findContactForm.addEventListener('click',function(event){
     if(event.target === this) {this.style.display = "none";}
 })
 
+
+
+
+
+// const fetchTestButton = document.querySelector("#fetch-post-button");
+//
+// fetchTestButton.addEventListener('click',function(event){
+//     event.preventDefault();
+//     testPost();
+// })
+
+
+const fetchTestButton = document.querySelector("#add-contact-form-ajax");
+
+fetchTestButton.addEventListener('submit',function(event){
+    event.preventDefault();
+    testPost();
+})
+
+//const formWithData = document.getElementById('add-contact-form-ajax')
+const formWithData = document.querySelector('#add-contact-form-ajax')
+
+const testPost = async () => {
+
+    const newContactForm = new FormData(formWithData);
+    for (let [key, value] of newContactForm.entries()) {
+        console.log(key, value);
+    }
+
+    try {
+        const response = await fetch('/contacts/addnew', {
+            method: 'POST',
+            body: newContactForm
+        });
+        const result = await response.json();
+        console.log('Успех:', JSON.stringify(result));
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+
+
+
+
+

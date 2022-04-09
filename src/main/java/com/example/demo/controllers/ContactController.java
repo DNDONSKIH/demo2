@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
@@ -35,7 +37,7 @@ public class ContactController {
     }
 
     @GetMapping("/{id}")
-    public String getContactById(@PathVariable Integer id, Model model) {
+    public String getContactById(@PathVariable Integer id,  Model model) {
         Contact contact = contactRepository.findById(id).orElse(new Contact());
         model.addAttribute("contact", contact);
         return "contact";
@@ -49,9 +51,13 @@ public class ContactController {
     }
 
     @GetMapping("/filtered")
-    public String getContactByName(@RequestParam("key") String key,
-                                   @RequestParam("findOption") String option,
+    public String getContactByName(/*@RequestParam("key") String key,
+                                   @RequestParam("findOption") String option,*/
+                                   HttpServletRequest request,
                                    Model model) {
+        String key = request.getParameter("key");
+        String option = request.getParameter("findOption");
+
         List<Contact> contacts = null;
         if(option.equals("phonenumber")) {
             contacts = contactRepository.findByPhoneNumberList_Value(key);
@@ -145,11 +151,5 @@ public class ContactController {
 
         return "redirect:/contacts/" + id.toString();
     }
-
-//    @GetMapping("/find-by-phone-number") //другой способ получить параметры get апроса
-//    public @ResponseBody List<Contact> getContactByPhoneNumber(HttpServletRequest request) {
-//        String number = request.getParameter("number");
-//        return contactRepository.findByPhoneNumberList_Value(number);
-//    }
 
 }

@@ -30,7 +30,6 @@ public class ContactRestApi {
         validInputData &= serviceClass.isValidName(middlename);
         validInputData &= serviceClass.isValidName(lastname);
 
-
         if(validInputData) {
             Date date = serviceClass.getDateFromDateString(birthday);
             newContact.setSurname(surname);

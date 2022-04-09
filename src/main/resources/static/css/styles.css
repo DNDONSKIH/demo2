@@ -2,7 +2,7 @@
     font-family: Arial;
 }
 
-#create-contact-container {
+.message-container {
     display: none;
     align-items: center;
     justify-content: center;
@@ -15,27 +15,7 @@
     background-color: #88888878;
 }
 
-#create-contact-container form{
-    background-color: white;
-    border: 1px solid #333;
-    width: 300px;
-    padding: 20px;
-}
-
-#find-contact-container {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    background-color: #88888878;
-}
-
-#find-contact-container form{
+.message-container form{
     background-color: white;
     border: 1px solid #333;
     width: 300px;

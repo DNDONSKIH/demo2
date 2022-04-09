@@ -1,6 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
-import com.example.demo.components.DateStringToDateConverter;
+import com.example.demo.components.ServiceClass;
 import com.example.demo.entities.Contact;
 import com.example.demo.entities.PhoneNumber;
 import com.example.demo.entities.PhoneType;
@@ -17,7 +17,7 @@ import java.util.*;
 public class ContactController {
 
     @Autowired
-    private DateStringToDateConverter dateStringToDateConverter;
+    private ServiceClass serviceClass;
 
     @Autowired
     private ContactRepository contactRepository;
@@ -69,7 +69,7 @@ public class ContactController {
                                 @RequestParam("lastname") String lastname,
                                 @RequestParam("birthday") String birthday) {
 
-        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
+        Date date = serviceClass.getDateFromDateString(birthday);
         var newContact = new Contact();
         var numList = new ArrayList<PhoneNumber>();
         newContact.setSurname(surname);
@@ -132,7 +132,7 @@ public class ContactController {
                                         @RequestParam("birthday") String birthday,
                                         @PathVariable Integer id) {
 
-        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
+        Date date = serviceClass.getDateFromDateString(birthday);
         Contact patchedContact = contactRepository
                 .findById(id).orElse(new Contact());
 
@@ -151,25 +151,5 @@ public class ContactController {
 //        String number = request.getParameter("number");
 //        return contactRepository.findByPhoneNumberList_Value(number);
 //    }
-
-    @PostMapping("/addnew")
-    public @ResponseBody Contact getContactByPhoneNumber(   @RequestParam("surname") String surname,
-                                                            @RequestParam("middlename") String middlename,
-                                                            @RequestParam("lastname") String lastname,
-                                                            @RequestParam("birthday") String birthday ) {
-        Date date = dateStringToDateConverter.getDateFromDateString(birthday);
-        var newContact = new Contact();
-        var numList = new ArrayList<PhoneNumber>();
-        newContact.setSurname(surname);
-        newContact.setMiddleName(middlename);
-        newContact.setLastName(lastname);
-        newContact.setBirthday(date);
-
-        newContact.setPhoneNumberList( numList );
-        var savedContact = contactRepository.save(newContact);
-        return contactRepository.findById(savedContact.getId()).orElse(new Contact());
-    }
-
-
 
 }

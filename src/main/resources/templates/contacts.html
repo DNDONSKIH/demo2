@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div id="find-contact-container">
+<div id="find-contact-container" class="message-container">
     <form method="GET" action="/contacts/filtered/">
         <h3>Поиск контактов:</h3>
         <input type="text" name="key" value=""><br>
@@ -19,7 +19,7 @@
     </form>
 </div>
 
-<div id="create-contact-container">
+<div id="create-contact-container" class="message-container">
     <form method="POST" action="/contacts" id="create-contact-form">
         <h3>Добавление контакта</h3>
         <label>Фамилия:</label><input type="text" name="surname" value=""><br>
@@ -31,7 +31,7 @@
     </form>
 </div>
 
-<div id="create-contact-form-ajax">
+<div id="create-contact-form-ajax-container" class="message-container">
     <form id="add-contact-form-ajax">
         <h3>Добавление контакта</h3>
         <label>Фамилия:</label><input type="text" name="surname" value=""><br>
@@ -43,8 +43,8 @@
     </form>
 </div>
 
-<hr>
 <button id="show-add-contact-container-button">Добавить контакт</button>
+<button id="show-create-contact-form-ajax-container-button">Добавить контакт через ajax</button>
 <button id="show-find-contact-container-button">Поиск контакта</button><br>
 <p>Список контактов:</p><br>
 

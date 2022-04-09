@@ -16,7 +16,6 @@ public class PhoneNumber {
 
     @ManyToOne
     @JoinColumn(name="contact_id")
-    //@ToString.Exclude
     private Contact contact;
 
     private String value;

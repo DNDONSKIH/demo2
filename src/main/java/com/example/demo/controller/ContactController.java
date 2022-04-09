@@ -48,18 +48,19 @@ public class ContactController {
         return "contact-edit";
     }
 
-    @GetMapping("/filtered-by-surname")
-    public String getContactByName(@RequestParam("surname") String surname, Model model) {
-        List<Contact> contacts = contactRepository.findBySurname(surname);
+    @GetMapping("/filtered")
+    public String getContactByName(@RequestParam("key") String key,
+                                   @RequestParam("findOption") String option,
+                                   Model model) {
+        List<Contact> contacts = null;
+        if(option.equals("phonenumber")) {
+            contacts = contactRepository.findByPhoneNumberList_Value(key);
+        }
+        else {
+            contacts = contactRepository.findBySurname(key);
+        }
         model.addAttribute("contacts", contacts);
-        return "filtered-by-surname";
-    }
-
-    @GetMapping("/filtered-by-phone-number")
-    public String getContactByPhoneNumber(@RequestParam("phonenumber") String phoneNumber, Model model) {
-        List<Contact> contacts = contactRepository.findByPhoneNumberList_Value(phoneNumber);
-        model.addAttribute("contacts", contacts);
-        return "filtered-by-phone-number";
+        return "filtered-by";
     }
 
     @PostMapping

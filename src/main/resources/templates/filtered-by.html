@@ -8,15 +8,15 @@
 <body>
 
 <a href="/contacts/"><h3>Вернуться к полному списку</h3></a>
-<p>По имени найдено:</p>
+<p>Результат поиска:</p>
 <br>
 
-<div id="filtered-by-surname-contact-list">
+<div id="filtered-contact-list">
     <div th:each="contact : ${contacts}">
         <a th:href="@{/contacts/{id}(id=${contact.getId()})}"
            class="contact-link"
            th:attr="data-id=${contact.getId()}"
-           th:text="${contact.getSurname()}"></a>
+           th:text="${contact.getSurname() + ' ' + contact.getMiddleName()}"></a>
         <br>
         <hr>
     </div>

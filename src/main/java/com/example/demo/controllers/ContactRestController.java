@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @RestController
-public class ContactRestApi {
+public class ContactRestController {
 
     @Autowired
     ServiceClass serviceClass;

@@ -40,7 +40,7 @@ const newContactHTMLGenerator = (result) => {
             </div>`;
 }
 
-async function addContactViaAjax() {
+const addContactViaAjax = async () => {
     const newContactForm = new FormData(formWithData);
     // for (let [key, value] of newContactForm.entries()) {  console.log(key, value); }
 

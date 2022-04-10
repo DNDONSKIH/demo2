@@ -37,7 +37,7 @@ public class ContactRestController {
             newContact.setLastName(lastname);
             newContact.setBirthday(date);
             newContact.setPhoneNumberList( new ArrayList<PhoneNumber>() );
-            var savedContact = contactRepository.save(newContact);
+            Contact savedContact = contactRepository.save(newContact);
             return contactRepository.findById(savedContact.getId()).orElse(new Contact());
         }
 

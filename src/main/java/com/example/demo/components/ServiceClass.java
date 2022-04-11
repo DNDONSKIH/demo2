@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 @Component
 public class ServiceClass {
 
-    public Date getDateFromDateString(String dateString){
+    public Date getDateFromDateString(String dateString) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDate = new Date();
         try {
@@ -20,8 +20,7 @@ public class ServiceClass {
         return parsedDate;
     }
 
-    public boolean isValidName(String name)
-    {
+    public boolean isValidName(String name) {
 //        String regex = "^[A-Za-z]\\w{5,29}$";
         String regex = "[А-Яа-яA-Za-z]{2,19}$";
         Pattern p = Pattern.compile(regex);
@@ -32,8 +31,7 @@ public class ServiceClass {
         return m.matches();
     }
 
-    public boolean isValidPhoneNumber(String phoneNumber)
-    {
+    public boolean isValidPhoneNumber(String phoneNumber) {
         String phone = phoneNumber.replaceAll("[\\D]","");
         if ((phone.length() >= 9) && (phone.length()<=11))
             return true;

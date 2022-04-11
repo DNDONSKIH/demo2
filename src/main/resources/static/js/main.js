@@ -42,19 +42,25 @@ const newContactHTMLGenerator = (result) => {
 
 const addContactViaAjax = async () => {
     const newContactForm = new FormData(formWithData);
-    // for (let [key, value] of newContactForm.entries()) {  console.log(key, value); }
+    const newContactObject = {};
+
+    for (let [key, value] of newContactForm.entries()) {
+        newContactObject[key] = value;
+        //console.log(key, value);
+    }
 
     try {
-        const response = await fetch('/contactlist', {
+        const response = await fetch('/addcontact', {
             method: 'POST',
-            body: newContactForm
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newContactObject) //newContactForm
         });
         const result = await response.json();
 
         const operationSuccess = result['id'] < 0? false : true;
         if(operationSuccess) {
             const newContactHTML = newContactHTMLGenerator(result);
-            contactListContainer.insertAdjacentHTML('beforeend', newContactHTML)
+            contactListContainer.insertAdjacentHTML('beforeend', newContactHTML);
             createContactAjaxContainer.style.display = "none";
         }
         else {

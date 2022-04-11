@@ -9,6 +9,39 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+
+
+@RestController
+public class ContactRestController {
+
+    @Autowired
+    ServiceClass serviceClass;
+
+    @Autowired
+    ContactRepository contactRepository;
+
+    @PostMapping("/addcontact")
+    public Contact addContactViaAjax(@RequestBody Contact contact) {
+
+        boolean validInputData = serviceClass.isValidName(contact.getSurname());
+        validInputData &= serviceClass.isValidName(contact.getMiddleName());
+        validInputData &= serviceClass.isValidName(contact.getLastName());
+        validInputData &= (contact.getBirthday() != null);
+
+        if(validInputData) {
+            Contact savedContact = contactRepository.save(contact);
+            return contactRepository.findById(savedContact.getId()).orElse(new Contact());
+        }
+
+        var newContact = new Contact();
+        newContact.setId(-1);
+        return newContact;
+    }
+
+}
+
+
 /*
 @RestController
 public class ContactRestController {
@@ -47,34 +80,3 @@ public class ContactRestController {
 
 }
 */
-
-
-
-@RestController
-public class ContactRestController {
-
-    @Autowired
-    ServiceClass serviceClass;
-
-    @Autowired
-    ContactRepository contactRepository;
-
-    @PostMapping("/addcontact")
-    public Contact addContactViaAjax(@RequestBody Contact contact) {
-
-        boolean validInputData = serviceClass.isValidName(contact.getSurname());
-        validInputData &= serviceClass.isValidName(contact.getMiddleName());
-        validInputData &= serviceClass.isValidName(contact.getLastName());
-        validInputData &= (contact.getBirthday() != null);
-
-        if(validInputData) {
-            Contact savedContact = contactRepository.save(contact);
-            return contactRepository.findById(savedContact.getId()).orElse(new Contact());
-        }
-
-        var newContact = new Contact();
-        newContact.setId(-1);
-        return newContact;
-    }
-
-}

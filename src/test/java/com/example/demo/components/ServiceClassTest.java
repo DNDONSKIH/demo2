@@ -36,18 +36,14 @@ public class ServiceClassTest {
     @Test
     public void twoCharStringShouldPass(){ Assert.assertTrue(serviceClass.isValidName("aa")); }
     @Test
-    public void StringShouldPass(){ Assert.assertTrue(serviceClass.isValidName("aaaa")); }
+    public void stringShouldPass(){ Assert.assertTrue(serviceClass.isValidName("aaaa")); }
 
     @Test
-    public void DatesShouldBeEqual(){ Assert.assertEquals(testDate, serviceClass.getDateFromDateString("1970-01-01")); }
+    public void datesShouldBeEqual(){ Assert.assertEquals(testDate, serviceClass.getDateFromDateString("1970-01-01")); }
     @Test
-    public void DatesShouldNotBeEqual(){ Assert.assertNotEquals(testDate, serviceClass.getDateFromDateString("2222-1-1")); }
-
-
-
-//    @Test(expected = ParseException.class)
-//    public void ShouldThrowException(){
-//        Date d = serviceClass.getDateFromDateString("22222222");
-//    }
-
+    public void datesShouldNotBeEqual(){ Assert.assertNotEquals(testDate, serviceClass.getDateFromDateString("2222-1-1")); }
+    @Test // @Test(expected = ParseException.class)
+    public void invalidInputShouldProduceDefaultDate(){ Assert.assertEquals(testDate, serviceClass.getDateFromDateString(" ")); }
+    @Test
+    public void nullInputShouldProduceDefaultDate(){ Assert.assertEquals(testDate, serviceClass.getDateFromDateString(null)); }
 }

@@ -13,14 +13,18 @@ public class ServiceClass {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDate = null;
         try {
+            parsedDate = format.parse("1970-01-01");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        if (dateString == null)
+            return parsedDate;
+
+        try {
             parsedDate = format.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
-            try {
-                parsedDate = format.parse("1970-01-01");
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
         }
         return parsedDate;
     }
@@ -33,13 +37,6 @@ public class ServiceClass {
         }
         Matcher m = p.matcher(name);
         return m.matches();
-    }
-
-    public boolean isValidPhoneNumber(String phoneNumber) {
-        String phone = phoneNumber.replaceAll("[\\D]","");
-        if ((phone.length() >= 9) && (phone.length()<=11))
-            return true;
-        return false;
     }
 
 }

@@ -125,9 +125,10 @@ public class ContactController {
     public String deletePhoneNumberById(@RequestParam("phoneId") String phoneId,
                                         @PathVariable Integer id) {
         int currentPhoneId = Integer.parseInt(phoneId);
-        PhoneNumber deletedPhoneNumber = phoneNumberRepository
-                .findById(currentPhoneId).orElse(new PhoneNumber());
-        phoneNumberRepository.delete(deletedPhoneNumber);
+//        PhoneNumber deletedPhoneNumber = phoneNumberRepository
+//                .findById(currentPhoneId).orElse(new PhoneNumber());
+//        phoneNumberRepository.delete(deletedPhoneNumber);
+        phoneNumberRepository.deleteById(currentPhoneId);
         return "redirect:/contacts/" + id.toString();
     }
 

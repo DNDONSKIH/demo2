@@ -42,41 +42,17 @@ public class ContactRestController {
 
 }
 
-
 /*
-@RestController
-public class ContactRestController {
+package com.example.demo;
 
-    @Autowired
-    ServiceClass serviceClass;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-    @Autowired
-    ContactRepository contactRepository;
+@SpringBootTest
+class Demo2ApplicationTests {
 
-    @PostMapping("/contactlist")
-    public Contact addContactViaAjax(   @RequestParam("surname") String surname,
-                                        @RequestParam("middlename") String middlename,
-                                        @RequestParam("lastname") String lastname,
-                                        @RequestParam("birthday") String birthday ) {
-
-        var newContact = new Contact();
-        boolean validInputData = serviceClass.isValidName(surname);
-        validInputData &= serviceClass.isValidName(middlename);
-        validInputData &= serviceClass.isValidName(lastname);
-
-        if(validInputData) {
-            Date date = serviceClass.getDateFromDateString(birthday);
-            newContact.setSurname(surname);
-            newContact.setMiddleName(middlename);
-            newContact.setLastName(lastname);
-            newContact.setBirthday(date);
-            newContact.setPhoneNumberList( new ArrayList<PhoneNumber>() );
-            Contact savedContact = contactRepository.save(newContact);
-            return contactRepository.findById(savedContact.getId()).orElse(new Contact());
-        }
-
-        newContact.setId(-1);
-        return newContact;
+    @Test
+    void contextLoads() {
     }
 
 }

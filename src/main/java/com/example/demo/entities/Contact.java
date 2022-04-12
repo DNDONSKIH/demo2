@@ -2,6 +2,8 @@ package com.example.demo.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Contact {
     private String middleName;
     @Column(name = "last_name")
     private String lastName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @OneToMany( targetEntity = PhoneNumber.class,
                 mappedBy = "contact",

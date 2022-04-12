@@ -33,6 +33,7 @@ public class ContactController {
         var contacts = new ArrayList<Contact>();
         contactIterable.forEach(contact -> { contacts.add(contact); });
         model.addAttribute("contacts", contacts);
+        model.addAttribute("contact", new Contact());
         return "contacts";
     }
 
@@ -51,11 +52,8 @@ public class ContactController {
     }
 
     @GetMapping("/filtered")
-    public String getContactByName(/*@RequestParam("key") String key,
-                                   @RequestParam("findOption") String option,*/
-                                   HttpServletRequest request,
-                                   Model model) {
-        String key = request.getParameter("key");
+    public String getContactByName(HttpServletRequest request, Model model) {
+        String key = request.getParameter("key"); /* вместо @RequestParam("key") String key, @RequestParam("findOption") String option,*/
         String option = request.getParameter("findOption");
 
         List<Contact> contacts = null;
@@ -69,21 +67,27 @@ public class ContactController {
         return "filtered-by";
     }
 
+//    @PostMapping
+//    public String addNewContact(@RequestParam("surname") String surname,
+//                                @RequestParam("middlename") String middlename,
+//                                @RequestParam("lastname") String lastname,
+//                                @RequestParam("birthday") String birthday) {
+//
+//        Date date = serviceClass.getDateFromDateString(birthday);
+//        var newContact = new Contact();
+//        var numList = new ArrayList<PhoneNumber>();
+//        newContact.setSurname(surname);
+//        newContact.setMiddleName(middlename);
+//        newContact.setLastName(lastname);
+//        newContact.setBirthday(date);
+//
+//        newContact.setPhoneNumberList( numList );
+//        contactRepository.save(newContact);
+//        return "redirect:/contacts/";
+//    }
+
     @PostMapping
-    public String addNewContact(@RequestParam("surname") String surname,
-                                @RequestParam("middlename") String middlename,
-                                @RequestParam("lastname") String lastname,
-                                @RequestParam("birthday") String birthday) {
-
-        Date date = serviceClass.getDateFromDateString(birthday);
-        var newContact = new Contact();
-        var numList = new ArrayList<PhoneNumber>();
-        newContact.setSurname(surname);
-        newContact.setMiddleName(middlename);
-        newContact.setLastName(lastname);
-        newContact.setBirthday(date);
-
-        newContact.setPhoneNumberList( numList );
+    public String addNewContact(@ModelAttribute("contact") Contact newContact) {
         contactRepository.save(newContact);
         return "redirect:/contacts/";
     }

@@ -19,14 +19,26 @@
     </form>
 </div>
 
+<!--<div id="create-contact-container" class="message-container">-->
+<!--    <form method="POST" action="/contacts" id="create-contact-form">-->
+<!--        <h3>Добавление контакта</h3>-->
+<!--        <label>Фамилия:</label><input type="text" name="surname" value=""><br>-->
+<!--        <label>Имя:</label><input type="text" name="middlename" value=""><br>-->
+<!--        <label>Отчество:</label><input type="text" name="lastname" value=""><br>-->
+<!--        <label>День рождения:</label>-->
+<!--        <input type="date" name="birthday"><br>-->
+<!--        <button type="submit" id="save-contact">Сохранить</button>-->
+<!--    </form>-->
+<!--</div>-->
+
 <div id="create-contact-container" class="message-container">
-    <form method="POST" action="/contacts" id="create-contact-form">
+    <form th:method="POST" th:action="@{/contacts}" th:object="${contact}" id="create-contact-form">
         <h3>Добавление контакта</h3>
-        <label>Фамилия:</label><input type="text" name="surname" value=""><br>
-        <label>Имя:</label><input type="text" name="middlename" value=""><br>
-        <label>Отчество:</label><input type="text" name="lastname" value=""><br>
+        <label>Фамилия:</label> <input type="text" th:field="*{surname}"><br>
+        <label>Имя:</label>     <input type="text" th:field="*{middleName}"><br>
+        <label>Отчество:</label><input type="text" th:field="*{lastName}"><br>
         <label>День рождения:</label>
-        <input type="date" name="birthday"><br>
+        <input type="date" th:field="*{birthday}"><br>
         <button type="submit" id="save-contact">Сохранить</button>
     </form>
 </div>

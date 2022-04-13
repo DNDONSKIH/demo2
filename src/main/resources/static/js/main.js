@@ -1,13 +1,3 @@
-const addContactButton = document.querySelector("#show-add-contact-container-button");
-const createContactContainer = document.getElementById('create-contact-container')
-addContactButton.addEventListener('click',function() {
-    createContactContainer.style.display = "flex";
-})
-
-createContactContainer.addEventListener('click',function(event) {
-    if(event.target === this) { this.style.display = "none"; }
-})
-
 const findContactButton = document.querySelector("#show-find-contact-container-button");
 const findContactContainer = document.getElementById('find-contact-container')
 
@@ -82,3 +72,13 @@ addContactAjaxButton.addEventListener('click',function() {
 createContactAjaxContainer.addEventListener('click',function(event) {
     if(event.target === this) { this.style.display = "none"; }
 })
+
+// const addContactButton = document.querySelector("#show-add-contact-container-button");
+// const createContactContainer = document.getElementById('create-contact-container')
+// addContactButton.addEventListener('click',function() {
+//     createContactContainer.style.display = "flex";
+// })
+//
+// createContactContainer.addEventListener('click',function(event) {
+//     if(event.target === this) { this.style.display = "none"; }
+// })s

@@ -55,18 +55,16 @@ const addContactViaAjax = async () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newContactObject) //newContactForm
         });
-        const result = await response.json();
-
-        const operationSuccess = result['id'] < 0? false : true;
-        if(operationSuccess) {
+        if(response.ok) {
+            const result = await response.json();
             const newContactHTML = newContactHTMLGenerator(result);
             contactListContainer.insertAdjacentHTML('beforeend', newContactHTML);
             createContactAjaxContainer.style.display = "none";
+            console.log('SUCCESS:', JSON.stringify(result));
         }
         else {
-            alert("Ошибка! Проверьте формат введенных данных.")
+            alert("Ошибка! Проверьте формат введенных данных.");
         }
-        console.log('SUCCESS:', JSON.stringify(result));
     } catch (error) {
         console.error('ERROR:', error);
     }

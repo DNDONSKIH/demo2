@@ -24,19 +24,22 @@ public class ContactRestController {
     @PostMapping("/addcontact")
     public Contact addContactViaAjax(@RequestBody Contact contact) {
 
-        boolean validInputData = serviceClass.isValidName(contact.getSurname())
-                            && serviceClass.isValidName(contact.getMiddleName())
-                            && serviceClass.isValidName(contact.getLastName())
-                            && (contact.getBirthday() != null);
+//        boolean validInputData = serviceClass.isValidName(contact.getSurname())
+//                            && serviceClass.isValidName(contact.getMiddleName())
+//                            && serviceClass.isValidName(contact.getLastName())
+//                            && (contact.getBirthday() != null);
+//
+//        if(validInputData) {
+//            Contact savedContact = contactRepository.save(contact);
+//            return contactRepository.findById(savedContact.getId()).orElse(new Contact());
+//        }
+//
+//        var newContact = new Contact();
+//        newContact.setId(-1);
+//        return newContact;
 
-        if(validInputData) {
-            Contact savedContact = contactRepository.save(contact);
-            return contactRepository.findById(savedContact.getId()).orElse(new Contact());
-        }
-
-        var newContact = new Contact();
-        newContact.setId(-1);
-        return newContact;
+        Contact savedContact = contactRepository.save(contact);
+        return contactRepository.findById(savedContact.getId()).orElse(new Contact());
     }
 
 

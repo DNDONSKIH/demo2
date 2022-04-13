@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.example.demo.components.ServiceClass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +32,13 @@ public class Contact {
     public Contact() {
     }
 
+    public Contact(String surname, String middleName, String lastName, Date birthday) {
+        this.surname = surname;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -44,7 +52,9 @@ public class Contact {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        var sc = new ServiceClass();
+        if(sc.isValidName(surname)) { this.surname = surname; }
+        else throw new IllegalArgumentException();
     }
 
     public String getMiddleName() {
@@ -52,7 +62,9 @@ public class Contact {
     }
 
     public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+        var sc = new ServiceClass();
+        if(sc.isValidName(middleName)) { this.middleName = middleName; }
+        else throw new IllegalArgumentException();
     }
 
     public String getLastName() {
@@ -60,7 +72,9 @@ public class Contact {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        var sc = new ServiceClass();
+        if(sc.isValidName(lastName)) { this.lastName = lastName; }
+        else throw new IllegalArgumentException();
     }
 
     public Date getBirthday() {
@@ -68,7 +82,8 @@ public class Contact {
     }
 
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        if(birthday != null) {this.birthday = birthday;}
+        else throw new IllegalArgumentException();
     }
 
     public List<PhoneNumber> getPhoneNumberList() {

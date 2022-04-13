@@ -4,7 +4,7 @@ addContactButton.addEventListener('click',function() {
     createContactContainer.style.display = "flex";
 })
 
-createContactContainer.addEventListener('click',function(event){
+createContactContainer.addEventListener('click',function(event) {
     if(event.target === this) { this.style.display = "none"; }
 })
 
@@ -15,7 +15,7 @@ findContactButton.addEventListener('click',function() {
     findContactContainer.style.display = "flex";
 })
 
-findContactContainer.addEventListener('click',function(event){
+findContactContainer.addEventListener('click',function(event) {
     if(event.target === this) {this.style.display = "none";}
 })
 
@@ -70,7 +70,7 @@ const addContactViaAjax = async () => {
     }
 }
 
-fetchTestButton.addEventListener('submit',function(event){
+fetchTestButton.addEventListener('submit',function(event) {
     event.preventDefault();
     addContactViaAjax();
 })
@@ -79,6 +79,6 @@ addContactAjaxButton.addEventListener('click',function() {
     createContactAjaxContainer.style.display = "flex";
 })
 
-createContactAjaxContainer.addEventListener('click',function(event){
+createContactAjaxContainer.addEventListener('click',function(event) {
     if(event.target === this) { this.style.display = "none"; }
 })

@@ -40,11 +40,11 @@ public class ServiceClassTest {
     public void stringShouldPass(){ Assertions.assertTrue(serviceClass.isValidName("aaaa")); }
 
     @Test
-    public void datesShouldBeEqual(){ Assertions.assertEquals(testDate, serviceClass.getDateFromDateString("1970-01-01")); }
+    public void datesShouldBeEqual() throws ParseException { Assertions.assertEquals(testDate, serviceClass.getDateFromDateString("1970-01-01")); }
     @Test
-    public void datesShouldNotBeEqual(){ Assertions.assertNotEquals(testDate, serviceClass.getDateFromDateString("2222-1-1")); }
-    @Test // @Test(expected = ParseException.class)
-    public void invalidInputShouldProduceDefaultDate(){ Assertions.assertEquals(testDate, serviceClass.getDateFromDateString(" ")); }
+    public void datesShouldNotBeEqual() throws ParseException { Assertions.assertNotEquals(testDate, serviceClass.getDateFromDateString("2222-1-1")); }
     @Test
-    public void nullInputShouldProduceDefaultDate(){ Assertions.assertEquals(testDate, serviceClass.getDateFromDateString(null)); }
+    public void invalidInputShouldProduceDefaultDate() throws ParseException { Assertions.assertThrows(ParseException.class, () -> serviceClass.getDateFromDateString(" ")); }
+    @Test
+    public void nullInputShouldProduceDefaultDate() throws ParseException { Assertions.assertEquals(testDate, serviceClass.getDateFromDateString(null)); }
 }

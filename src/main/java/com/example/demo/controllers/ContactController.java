@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -143,9 +144,13 @@ public class ContactController {
                                         @RequestParam("birthday") String birthday,
                                         @PathVariable Integer id) {
 
-        Date date = serviceClass.getDateFromDateString(birthday);
-        Contact patchedContact = contactRepository
-                .findById(id).orElse(new Contact());
+        Date date = null;
+        try {
+            date = serviceClass.getDateFromDateString(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Contact patchedContact = contactRepository .findById(id).orElse(new Contact());
 
         patchedContact.setSurname(surname);
         patchedContact.setMiddleName(middlename);

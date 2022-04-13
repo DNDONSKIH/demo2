@@ -9,24 +9,11 @@ import java.util.regex.Pattern;
 @Component
 public class ServiceClass {
 
-    public Date getDateFromDateString(String dateString) {
+    public Date getDateFromDateString(String dateString) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedDate = null;
-        try {
-            parsedDate = format.parse("1970-01-01");
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        if (dateString == null)
-            return parsedDate;
-
-        try {
-            parsedDate = format.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return parsedDate;
+        Date parsedDate = format.parse("1970-01-01");
+        if (dateString == null) return parsedDate;
+        return format.parse(dateString);
     }
 
     public boolean isValidName(String name) {
